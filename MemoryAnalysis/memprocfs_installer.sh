@@ -41,3 +41,5 @@ cd $CURRENTDIR
 echo "[*] Creating symbolic link from $MPFSBIN at $SYMLINKLOC\n"
 chmod +x $MPFSBIN
 ln -s $MPFSBIN $SYMLINKLOC
+
+echo "\n[*] Script finished!"
