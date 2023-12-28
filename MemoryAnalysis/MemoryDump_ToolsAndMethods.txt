@@ -1,0 +1,35 @@
+# Many people have questions about collecting system memory dumps.
+
+# Below is a list of tools and methods to do so on a variety of systems.
+
+====================================================
+
+Windows (FTK Imager tool):
+	https://www.exterro.com/ftk-imager
+
+Windows (WinPmem tool):
+	https://github.com/Velocidex/WinPmem
+
+Linux (LinPmem tool):
+	https://github.com/Velocidex/Linpmem
+	
+Linux (LiME tool):
+	https://github.com/504ensicsLabs/LiME/tree/master
+
+List of additional capture tools:
+	https://github.com/digitalisx/awesome-memory-forensics
+
+Microsoft Hyper-V:
+	https://support.citrix.com/article/CTX126393/how-to-capture-a-memory-dump-from-a-provisioned-target-in-a-hyperv-environment
+
+Linux KVM:
+	https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-domain_commands-creating_a_dump_file_of_a_domains_core
+
+VirtualBox (vboxmanage -> debugvm -> dumpvmcore):
+	https://www.virtualbox.org/manual/ch08.html#vboxmanage-debugvm
+
+VMWare Workstation/Fusion (snapshot -> vmss2core):
+	https://kb.vmware.com/s/article/2003941
+
+Citrix MCS (non-persistent) machine on XenServer (Citrix Hypervisor):
+	https://support.citrix.com/article/CTX261722/steps-to-collect-complete-memory-dump-on-a-mcs-nonpersistent-machine-on-xenserver-citrix-hypervisor
