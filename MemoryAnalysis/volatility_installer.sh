@@ -28,8 +28,10 @@ fi
 # Check for the type of Linux distro
 if [[ $SYSINFO =~ $PATTERN ]]; then
 	DEBIAN=true
+	printf "[*] System is running debian-based distribution\n"
 else
 	DEBIAN=false
+	printf "[*] System is redhat-based distribution\n"
 fi
 
 # Run commands to install Volatility 
