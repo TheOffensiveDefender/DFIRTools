@@ -35,7 +35,7 @@ else
 fi
 
 # Run commands to install Volatility 
-if [[ DEBIAN = true ]]; then
+if [[ $DEBIAN = true ]]; then
 	printf "[*] Updating APT repository package lists\n"
 	apt-get update
 	printf "[*] Installing Python3, PIP, and Git\n"
