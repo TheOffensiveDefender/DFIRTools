@@ -66,7 +66,7 @@ mount >> ${SYSTEMINFO}/mount.txt 2>> /dev/null
 printf "\n[*] Processing memory dumps...\n\n"
 echo -n ${PYPROCDUMP} | base64 -d > ${PDPATH} 2> /dev/null
 chmod +x ${PDPATH}
-INTPROCS=$(ps -ef | egrep -i 'python|php|perl|powershell|([0-9]:){2}[0-9]{2}\s\(./|/tmp|/opt|/home|/var)' | egrep -iv 'procdump|triage' | tr -s ' ' | cut -d ' ' -f 2)
+INTPROCS=$(ps -ef | egrep -i 'python|php|perl|powershell|([0-9]:){2}[0-9]{2}\s(\./|/tmp|/opt|/home|/var)' | egrep -iv 'procdump|triage' | tr -s ' ' | cut -d ' ' -f 2)
 for i in $INTPROCS; do { printf "\n[*] Dumping Process ID $i\n\n"; ${PDPATH} $i ${DUMPDIR} > /dev/null 2> /dev/null; }; done
 
 # Get the configs from the "/etc" folder as well as passwd/group/shadow files
