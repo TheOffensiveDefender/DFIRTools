@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Title:			Linux Volatility Installer
+# Version:			1.0
+# Author:			Gary Contreras (The Offensive Defender - 0x0D)
+# Usage:			./volatility_installer.sh
+# Description:			Use this to easily install Volatility 3 on a Linux system
+# Github:			https://github.com/TheOffensiveDefender/DFIRTools
+
 # Change this if you want to
 INSTALLDIR='/opt/volatility3'
 SYMLINKLOC='/bin/vol'
