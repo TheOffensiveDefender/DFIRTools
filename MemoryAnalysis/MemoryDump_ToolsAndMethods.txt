@@ -3,6 +3,8 @@
 # Below is a list of tools and methods to do so on a variety of systems.
 
 ====================================================
+OS-Based
+====================================================
 
 Windows (FTK Imager tool):
 	https://www.exterro.com/ftk-imager
@@ -18,7 +20,11 @@ Linux (LiME tool):
 
 List of additional capture tools:
 	https://github.com/digitalisx/awesome-memory-forensics
-
+ 
+====================================================
+Virtualization-based
+====================================================
+ 
 Microsoft Hyper-V:
 	https://support.citrix.com/article/CTX126393/how-to-capture-a-memory-dump-from-a-provisioned-target-in-a-hyperv-environment
 
