@@ -8,7 +8,7 @@ To use the Windows triage collector you can execute it directly from Github at a
 
 	Invoke-Expression $([net.webclient]::new().downloadstring('https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/WindowsTriage.ps1'))
 
-Once the collector is done running it will produce a compressed .zip file in your "C:\\" directory
+Once the collector is done running it will produce a compressed .zip file in your "C:\\" directory.
  
 ===========================================================================
 
@@ -18,7 +18,9 @@ To use the Linux triage collector you can execute it directly from Github as roo
 
 	curl -s https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/LinuxTriage.sh | bash
 
-Once the collector is done running it will produce a compressed .tar.gz file in your "/root" directory
+Once the collector is done running it will produce a compressed .tar.gz file in your "/root" directory.
+
+Note: This script assumes Python 3 is installed on the system in order to use the "procdump.py" script available in this repository. If Python 3 is not installed, the script will not install it for you, in the interest of avoiding unnecessary modifications to the system. The procdump feature will simply not work in that case.
  
 ==========================================================================
  
