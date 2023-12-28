@@ -8,7 +8,7 @@ To use the Windows triage collector you can execute it directly from Github at a
 
 	Invoke-Expression $([net.webclient]::new().downloadstring('https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/WindowsTriage.ps1'))
 
-Once the collector is done running it will produce a compressed .zip file in your "C:\" directory
+Once the collector is done running it will produce a compressed .zip file in your "C:\\" directory
  
 ===========================================================================
 
