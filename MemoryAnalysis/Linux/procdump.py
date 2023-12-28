@@ -46,18 +46,20 @@ if len(sys.argv) == 3:
 else:
 	outputdir='.'
 
-# Output files
-dumpfilepath = '{0}/dump_{1}'.format(outputdir, pid)
-mapfilepath = '{0}/map_{1}.csv'.format(outputdir, pid)
-
 # Input files
 maps = '/proc/{0}/maps'.format(pid)
 mem = '/proc/{0}/mem'.format(pid)
 exe = '/proc/{0}/comm'.format(pid)
 
 # Open up the /proc/<pid>/comm file to figure out which process is actually being dumped based on its PID
+pexecutable = ''
 with open(exe,'r') as infile:
-	print('[*] Targeting Process ID {0} ({1})\n'.format(pid, infile.read().strip('\n')))
+	pexecutable = infile.read().strip('\n')
+	print('[*] Targeting Process ID {0} ({1})\n'.format(pid, pexecutable))
+
+# Output files
+dumpfilepath = '{0}/dump_{1}_{2}'.format(outputdir, pid, pexecutable)
+mapfilepath = '{0}/map_{1}_{2}.csv'.format(outputdir, pid, pexecutable)
 
 # Read the /proc/<pid>/maps file into memory and split it by lines
 mapinfo = ''
