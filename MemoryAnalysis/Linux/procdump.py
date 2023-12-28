@@ -28,7 +28,7 @@ import re
 
 # Print usage information
 if len(sys.argv) < 2:
-	print('\n[*] Usage:\n\t\t{0} <pid>\n'.format(sys.argv[0]))
+	print('\n[*] Usage:\n\t\t{0} <pid> [outputdirectory]\n'.format(sys.argv[0]))
 	print('This program produces a memory dump and a memory map file for an individual process, given its Process ID (PID).')
 	print('\nIt works by reading the "/proc/<pid>/maps", "/proc/<pid>/mem", and "/proc/<pid>/comm" files to pull its data.')
 	print('\nThe output files will be dumped in the current directory at the following locations:\n\t./dump_<pid>\n\t./map_<pid>.txt')
@@ -39,9 +39,16 @@ if len(sys.argv) < 2:
 # Get the Process ID (PID) argument from command line
 pid=sys.argv[1]
 
+# Get the output directory, if given, otherwise use current directory
+outputdir = ''
+if len(sys.argv) == 3:
+	outputdir=sys.argv[2].rstrip('/')
+else:
+	outputdir='.'
+
 # Output files
-dumpfilepath = './dump_{0}'.format(pid)
-mapfilepath = './map_{0}.csv'.format(pid)
+dumpfilepath = '{0}/dump_{1}'.format(outputdir, pid)
+mapfilepath = '{0}/map_{1}.csv'.format(outputdir, pid)
 
 # Input files
 maps = '/proc/{0}/maps'.format(pid)
