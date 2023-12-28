@@ -51,7 +51,7 @@ if [[ $DEBIAN = true ]]; then
 	printf "\n[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n\n"
 	ln -s $VOLBIN /bin/vol
 else
-	printf "[*] Updating YUM repository package lists\n\n"
+	printf "[*] Updating YUM/DNF repository package lists\n\n"
 	yum update -y || dnf update -y
 	printf "\n[*] Installing Python 3, PIP, and Git\n\n"
 	yum install -y python3 python3-pip git || dnf install -y python3 python3-pip git
