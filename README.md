@@ -2,6 +2,16 @@ This is a collection of miscellaneous tools that analysts can use to either buil
  
 ===========================================================================
 
+Windows Triage Collector: DFIRTools/TriageCollectors/WindowsTriage.ps1
+
+To use the Windows triage collector you can execute it directly from Github at an elevated Powershell prompt with the following command:
+
+	Invoke-Expression $([net.webclient]::new().downloadstring('https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/WindowsTriage.ps1'))
+
+Once the collector is done running it will produce a compressed .zip file in your "C:\" directory
+ 
+===========================================================================
+
 Linux Triage Collector: DFIRTools/TriageCollectors/LinuxTriage.sh
 
 To use the Linux triage collector you can execute it directly from Github as root with the following command:
