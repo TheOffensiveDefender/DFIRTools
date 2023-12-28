@@ -1,5 +1,15 @@
 This is a collection of miscellaneous tools that analysts can use to either build their forensic environment or perform analysis
  
+===========================================================================
+
+Linux Triage Collector: DFIRTools/TriageCollectors/LinuxTriage.sh
+
+To use the Linux triage collector you can execute it directly from Github as root with the following command:
+
+	curl -s https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/LinuxTriage.sh | bash
+
+Once the collector is done running it will produce a compressed .tar.gz file in your "/root" directory
+ 
 ==========================================================================
  
 Python 3 implementation to create a full dump of a Linux process' virtual address space: DFIRTools/MemoryAnalysis/Linux/procdump.py
@@ -20,10 +30,3 @@ After install, run the command "vol -h" to ensure it works!
  
 ===========================================================================
 
-Linux Triage Collector: DFIRTools/TriageCollectors/LinuxTriage.sh
-
-To use the Linux triage collector you can execute it directly from Github as root with the following command:
-
-	curl -s https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/LinuxTriage.sh | bash
-
-Once the collector is done running it will produce a compressed .tar.gz file in your "/root" directory
