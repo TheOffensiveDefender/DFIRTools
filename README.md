@@ -8,7 +8,7 @@ To get procdump, you can use the following command as any user:
  
 	wget -qO procdump.py https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/MemoryAnalysis/Linux/procdump.py && chmod +x procdump.py
  
-After install, you can test it by dumping any process you have privileges to dump (may need sudo/root).
+ After install, you can test it by dumping any process you have privileges to dump (may need sudo/root).
 ========================================================================================
  
 Volatility 3 full install: DFIRTools/MemoryAnalysis/volatility_installer.sh
