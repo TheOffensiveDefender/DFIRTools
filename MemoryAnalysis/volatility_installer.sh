@@ -28,27 +28,27 @@ fi
 # Check for the type of Linux distro
 if [[ $SYSINFO =~ $PATTERN ]]; then
 	DEBIAN=true
-	printf "[*] System is running debian-based distribution\n"
+	printf "[*] System is running debian-based distribution\n\n"
 else
 	DEBIAN=false
-	printf "[*] System is redhat-based distribution\n"
+	printf "[*] System is redhat-based distribution\n\n"
 fi
 
 # Run commands to install Volatility 
 if [[ $DEBIAN = true ]]; then
-	printf "[*] Updating APT repository package lists\n"
+	printf "[*] Updating APT repository package lists\n\n"
 	apt-get update
-	printf "[*] Installing Python3, PIP, and Git\n"
+	printf "\n[*] Installing Python3, PIP, and Git\n\n"
 	apt install -y python3 python3-pip git
-	printf "[*] Cloning Git repository $VOLATILITYURL to folder $INSTALLDIR\n"
+	printf "\n[*] Cloning Git repository $VOLATILITYURL to folder $INSTALLDIR\n\n"
 	git clone $VOLATILITYURL $INSTALLDIR
-	printf "[*] Giving "execute" permissions to all Python files in $INSTALLDIR\n"
+	printf "\n[*] Giving "execute" permissions to all Python files in $INSTALLDIR\n\n"
 	find $INSTALLDIR -type f -name "*.py" -exec chmod +x {} \;
-	printf "[*] Upgrading Python 3 PIP installation\n"
+	printf "[*] Upgrading Python 3 PIP installation\n\n"
 	python3 -m pip install --upgrade pip
-	printf "[*] Installing Volatility 3 PIP requirements from file ${VOLREQS}\n"
+	printf "[*] Installing Volatility 3 PIP requirements from file ${VOLREQS}\n\n"
 	python3 -m pip install -r $VOLREQS
-	printf "[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n"
+	printf "[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n\n"
 	ln -s $VOLBIN /bin/vol
 else
 	printf "[*] Updating YUM repository package lists\n"
