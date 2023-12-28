@@ -1,6 +1,6 @@
 This is a collection of miscellaneous tools that analysts can use to either build their forensic environment or perform analysis
  
-Python-based "procdump" implementation to create a full dump of a Linux process' virtual address space: DFIRTools/MemoryAnalysis/Linux/procdump.py
+Python 3 implementation to create a full dump of a Linux process' virtual address space: DFIRTools/MemoryAnalysis/Linux/procdump.py
 
 To get procdump, you can use the following command as any user:
  
