@@ -46,25 +46,25 @@ if [[ $DEBIAN = true ]]; then
 	find $INSTALLDIR -type f -name "*.py" -exec chmod +x {} \;
 	printf "[*] Upgrading Python 3 PIP installation\n\n"
 	python3 -m pip install --upgrade pip
-	printf "[*] Installing Volatility 3 PIP requirements from file ${VOLREQS}\n\n"
+	printf "\n[*] Installing Volatility 3 PIP requirements from file ${VOLREQS}\n\n"
 	python3 -m pip install -r $VOLREQS
-	printf "[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n\n"
+	printf "\n[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n\n"
 	ln -s $VOLBIN /bin/vol
 else
-	printf "[*] Updating YUM repository package lists\n"
-	yum update -y
-	printf "[*] Installing Python 3, PIP, and Git\n"
-	yum install -y python3 python3-pip git
-	printf "[*] Cloning Git repository $VOLATILITYURL to folder ${INSTALLDIR}\n"
+	printf "[*] Updating YUM repository package lists\n\n"
+	yum update -y || dnf update -y
+	printf "\n[*] Installing Python 3, PIP, and Git\n\n"
+	yum install -y python3 python3-pip git || dnf install -y python3 python3-pip git
+	printf "\n[*] Cloning Git repository $VOLATILITYURL to folder ${INSTALLDIR}\n\n"
 	git clone $VOLATILITYURL $INSTALLDIR
-	printf "[*] Giving "execute" permissions to all Python files in ${INSTALLDIR}\n"
+	printf "\n[*] Giving "execute" permissions to all Python files in ${INSTALLDIR}\n\n"
 	find $INSTALLDIR -type f -name "*.py" -exec chmod +x {} \;
-	printf "[*] Upgrading Python 3 PIP installation\n"
+	printf "[*] Upgrading Python 3 PIP installation\n\n"
 	python3 -m pip install --upgrade pip
-	printf "[*] Installing Volatility 3 PIP requirements from file ${VOLREQS}\n"
+	printf "\n[*] Installing Volatility 3 PIP requirements from file ${VOLREQS}\n\n"
 	python3 -m pip install -r $VOLREQS
-	printf "[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n"
+	printf "\n[*] Creating a symbolic link to ${VOLBIN} in ${SYMLINKLOC}\n\n"
 	ln -s $VOLBIN /bin/vol
 fi
 
-printf "\n[*] Script finished"
+printf "[*] Script finished"
