@@ -71,7 +71,7 @@ for i in $INTPROCS; do { printf "\n[*] Dumping Process ID $i\n\n"; ${PDPATH} $i 
 
 # Get the configs from the "/etc" folder as well as passwd/group/shadow files
 printf "\n[*] Copying and hashing \"/etc\" files...\n\n"
-find /etc -type f -size -2M -regextype egrep -iregex '.*(conf(ig)?|cfg|tab)$|/etc/(passwd|shadow|group|(host|issue).*|environment|net.*|profile|.*bashrc|services|timezone|sudoers|shells)$' -exec cp -R -f --parents --preserve {} ${OUTPUTDIR} \; -exec sha256sum {} + >> ${HASHDIR}/etc_hashes.txt 2> /dev/null
+find /etc -type f -size -2M -regextype egrep -iregex '.*(conf(ig)?|cfg|tab)$|/etc/(passwd|shadow|group|(host|issue).*|environment|net.*|profile|.*bashrc|services|timezone|sudoers|shells|.*cron.*)$' -exec cp -R -f --parents --preserve {} ${OUTPUTDIR} \; -exec sha256sum {} + >> ${HASHDIR}/etc_hashes.txt 2> /dev/null
 
 # Get any files in "/home" and "/tmp" that are executable and under 10 megabytes in size
 printf "\n[*] Enumerating and hashing SUID/GUID executables...\n\n"
