@@ -42,26 +42,26 @@ mkdir -p ${LIBLOGS}
 # Enumerate various information using an order of volatility
 
 printf "\n[*] Enumerating processes and network connections...\n\n"
-ps -ef >> ${SYSTEMINFO}/ps.txt 2>> /var/root/errors.txt
-lsof >> ${SYSTEMINFO}/lsof.txt 2>> /var/root/errors.txt
+ps -ef >> ${SYSTEMINFO}/ps.txt 2>> /dev/null
+lsof >> ${SYSTEMINFO}/lsof.txt 2>> /dev/null
 
 printf "\n[*] Enumerating network information...\n\n"
-ifconfig >> ${SYSTEMINFO}/ifconfig.txt 2>> /var/root/errors.txt
-arp -a >> ${SYSTEMINFO}/arp.txt 2>> /var/root/errors.txt
-netstat -natup tcp >> ${SYSTEMINFO}/netstat.txt 2>> /var/root/errors.txt
-netstat -nr >> ${SYSTEMINFO}/routes.txt 2>> /var/root/errors.txt
+ifconfig >> ${SYSTEMINFO}/ifconfig.txt 2>> /dev/null
+arp -a >> ${SYSTEMINFO}/arp.txt 2>> /dev/null
+netstat -natup tcp >> ${SYSTEMINFO}/netstat.txt 2>> /dev/null
+netstat -nr >> ${SYSTEMINFO}/routes.txt 2>> /dev/null
 
 printf "\n[*] Enumerating user login information...\n\n"
-w >> ${SYSTEMINFO}/w.txt 2>> /var/root/errors.txt
-who >> ${SYSTEMINFO}/who.txt 2>> /var/root/errors.txt
-id >> ${SYSTEMINFO}/id.txt 2>> /var/root/errors.txt
-last >> ${SYSTEMINFO}/last_logins.txt 2>> /var/root/errors.txt
+w >> ${SYSTEMINFO}/w.txt 2>> /dev/null
+who >> ${SYSTEMINFO}/who.txt 2>> /dev/null
+id >> ${SYSTEMINFO}/id.txt 2>> /dev/null
+last >> ${SYSTEMINFO}/last_logins.txt 2>> /dev/null
 
 printf "\n[*] Enumerating operating system and environment...\n\n"
-env >> ${SYSTEMINFO}/env.txt 2>> /var/root/errors.txt
-sudo -l >> ${SYSTEMINFO}/sudo.txt 2>> /var/root/errors.txt
-uname -a >> ${SYSTEMINFO}/uname.txt 2>> /var/root/errors.txt
-mount >> ${SYSTEMINFO}/mount.txt 2>> /var/root/errors.txt
+env >> ${SYSTEMINFO}/env.txt 2>> /dev/null
+sudo -l >> ${SYSTEMINFO}/sudo.txt 2>> /dev/null
+uname -a >> ${SYSTEMINFO}/uname.txt 2>> /dev/null
+mount >> ${SYSTEMINFO}/mount.txt 2>> /dev/null
 
 # Get the configs from the "/etc" folder as well as passwd/group/shadow files
 printf "\n[*] Getting and hashing \"/etc\" files...\n\n"
