@@ -21,6 +21,16 @@ To use the Linux triage collector you can execute it directly from Github as roo
 Once the collector is done running it will produce a compressed .tar.gz file in your "/root" directory.
 
 Note: This script assumes Python 3 is installed on the system, as it is by default on many if not all Linux distributions. The script references "/usr/bin/python3" as its interpreter in order to use the "procdump.py" script available in this repository. If Python 3 is not installed, the script will not install it for you, in the interest of avoiding unnecessary modifications to the system. The procdump feature will simply not work in that case.
+
+===========================================================================
+
+Mac OS Triage Collector: DFIRTools/TriageCollectors/MacTriage.sh
+ 
+To use the Mac OS Triage collector you can execute it directly from Github as root with the following command:
+ 
+	curl -s https://raw.githubusercontent.com/TheOffensiveDefender/DFIRTools/main/TriageCollectors/MacTriage.sh | bash
+ 
+Once the collector is done running it will produce a compressed .tar.gz file in your "/root" directory.
  
 ==========================================================================
  
