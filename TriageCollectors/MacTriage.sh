@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Title:			Mac OS Triage Collector
-# Version:			1.1.1
+# Version:			1.1.2
 # Author:			Gary Contreras (The Offensive Defender - 0x0D)
 # Usage:			./MacTriage.sh
 # Description:		Use this to grab a forensic triage of a live Mac OS system
@@ -74,22 +74,22 @@ find /usr/lib/cron/tabs /usr/local/etc/periodic /usr/lib/cron/jobs -follow -type
 # ==============================================================
 # Safari
 printf "\n[*] Getting Safari browser data...\n"
-find -E /var/root /Users -type f -iregex '/Users/[^/]+/Library/(Cookies/Cookies\.binarycookies$|Safari/(downloads\.plist|LastSession\.plist|history\.db|cloudtabs\.db)$|Containers/com\.apple\.safari/Data/Library/Caches/com\.apple\.safari/(|cache\.db$|(tabsnapshots|webkitcache/version../).*)' -exec tar -czf ${LIBLOGS}/safari_data.tar.gz {} + 2> /dev/null
+find -E /var/root /Users -follow -type f -iregex '/Users/[^/]+/Library/(Cookies/Cookies\.binarycookies$|Safari/(downloads\.plist|LastSession\.plist|history\.db|cloudtabs\.db)$|Containers/com\.apple\.safari/Data/Library/Caches/com\.apple\.safari/(|cache\.db$|(tabsnapshots|webkitcache/version../).*)' -exec tar -czf ${LIBLOGS}/safari_data.tar.gz {} + 2> /dev/null
 # Chrome / Firefox
 printf "\n[*] Getting Firefox/Chrome browser data...\n"
-find -E /var/root /Users -type f -iregex '/Users/[^/]+/Library/Application Support/(Google|Firefox)/(Chrome/Default|Profiles).*' -exec tar -czf ${USERPATH}/chrome_firefox_data.tar.gz {} + 2> /dev/null
+find -E /var/root /Users -follow -type f -iregex '/Users/[^/]+/Library/Application Support/(Google|Firefox)/(Chrome/Default|Profiles).*' -exec tar -czf ${USERPATH}/chrome_firefox_data.tar.gz {} + 2> /dev/null
 
 # ==============================================================
 # Get Apple mailbox data
 # ==============================================================
 printf "\n[*] Getting Apple mailbox data...\n"
-find -E /Users /var/root -type f -iregex '/Users/[^/]+/Library/(Containers/com\.apple\.mail/.*|Mail( Downloads/.*|/V./(Maildata/Envelope Index/.*|[^/]+/.*\.mbox$)))' -exec tar -czf ${USERPATH}/apple_mailbox_data.tar.gz {} + 2> /dev/null
+find -E /Users /var/root -follow -type f -iregex '/Users/[^/]+/Library/(Containers/com\.apple\.mail/.*|Mail( Downloads/.*|/V./(Maildata/Envelope Index/.*|[^/]+/.*\.mbox$)))' -exec tar -czf ${USERPATH}/apple_mailbox_data.tar.gz {} + 2> /dev/null
 
 # ==============================================================
 # Get USB Usage
 # ==============================================================
 printf "\n[*] Getting USB usage data...\n"
-find -E /Users /var/root -type f -iregex '/Users/[^/]+/Library/(Preferences/com\.apple\.finder\.plist|application support/com\.apple\.sharedfilelist/com\.apple\.LSSharedFileList\.FavoriteVolumes\.sfl2)$' -exec tar -czf ${USERPATH}/usb_usage.tar.gz {} + 2> /dev/null
+find -E /Users /var/root -follow -type f -iregex '/Users/[^/]+/Library/(Preferences/com\.apple\.finder\.plist|application support/com\.apple\.sharedfilelist/com\.apple\.LSSharedFileList\.FavoriteVolumes\.sfl2)$' -exec tar -czf ${USERPATH}/usb_usage.tar.gz {} + 2> /dev/null
 
 # ==============================================================
 # Account Usage
@@ -102,6 +102,30 @@ find -E /Library/Preferences -type f -iregex '.*com\.apple\.loginwindow\.plist$'
 # ==============================================================
 printf "\n[*] Getting iCloud documents...\n"
 find -E /Users -type f -iregex '/Users/[^/]+/Library/Mobile Documents/.*' -exec tar -czf ${USERPATH}/icloud_logs.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# Application-Level Firewall
+# ==============================================================
+printf "\n[*] Getting application-level firewall configuration...\n"
+find -E /Library/Preferences -type f -iregex '.*com\.apple\.alf\.plist' -exec tar -czf ${LIBLOGS}/application-level_firewall.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# System kernel extensions
+# ==============================================================
+printf "\n[*] Getting kernel extensions...\n"
+find -E /System/Library/Extensions -type f -iregex '.*\.kext$' -exec tar -czf ${LIBLOGS}/kernel_extensions.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# Users' SQLite files
+# ==============================================================
+printf "\n[*] Getting users' SQLite files...\n"
+find -E /Users -type f -iregex '/Users/[^/]+/Library/Preferences/.*\.(sqlite3?|db3?|s3db|sl3)$' -exec tar -czf ${USERPATH}/sqlite_preferences_files.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# Software install history
+# ==============================================================
+printf "\n[*] Getting system software install history...\n"
+find -E /Library/Receipts -type f -iregex '.*InstallHistory\.plist$' -exec tar -czf ${LIBLOGS}/sqlite_preferences_files.tar.gz {} + 2> /dev/null
 
 # Get any files in "/home" and "/tmp" that are executable and under 10 megabytes in size
 printf "\n[*] Enumerating and hashing interesting executables...\n"
@@ -137,11 +161,12 @@ find -E /Users /var/root -follow -type f -iregex '/(Users/[^/]+|var/root)/Librar
 printf "\n[*] Getting and hashing user hidden files...\n"
 find /Users -follow -type f -name ".*" -maxdepth 2 -exec tar -czf ${USERPATH}/hidden_user_files.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/user_hidden_files_hashes.txt 2> /dev/null
 find /var/root -follow -type f -name ".*" -maxdepth 2 -exec tar -czf ${ROOTPATH}/hidden_root_files.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/user_hidden_files_hashes.txt 2> /dev/null
+find -E /Users /var/root -follow -type f -maxdepth 4 -iregex '/Users/[^/]+/.{1,6}sh_(history|sessions).*' -exec tar -czf ${USERPATH}/shell_history.tar.gz {} + 2> /dev/null
 
 # Get "/Application" files
 printf "\n[*] Getting and hashing "/Applications" files...\n"
 find -E /Applications -type f -size -10M -iregex '.*\.(plist|db|dat))$' -exec tar -czf ${APPPATH}/applications.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/appliciations_file_hashes.txt 2> /dev/null
-find -E /Applications -type f -size -10M -iregex '/Applications/[^.]+\.app/Contents/Library/LoginItems/.*' -exec tar -czf ${APPPATH}/persistence_applications_loginitems.tar.gz 2> /dev/null
+find -E /Applications /Users -type f -size -10M -iregex '/Applications/[^/]+\.app/Contents/Library/LoginItems/.*|/Users/[^/]+/Library/Preferences/com\.apple\.loginitems\.plist$' -exec tar -czf ${APPPATH}/persistence_applications_loginitems.tar.gz {} + 2> /dev/null
 find -E /Users -type f -size -10M -iregex '/Users/[^/]+/Library/ApplicationSupport/com\.apple\.backgroundtaskmanagementagent/backgrounditems\.btm' -exec tar -czf ${USERPATH}/persistence_user_backgrounditems.tar.gz {} + 2> /dev/null
 
 # Get authorized keys files from all users
