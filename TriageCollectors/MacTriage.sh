@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Title:			Mac OS Triage Collector
-# Version:			1.1
+# Version:			1.1.1
 # Author:			Gary Contreras (The Offensive Defender - 0x0D)
 # Usage:			./MacTriage.sh
 # Description:		Use this to grab a forensic triage of a live Mac OS system
@@ -69,6 +69,40 @@ printf "\n[*] Getting and hashing \"/etc\" files...\n"
 find -E /etc -follow -type f -size -2M -iregex '.*(conf(ig)?|cfg|tab|\.local)$|/etc/(passwd|shadow|group|localtime|hosts|(host|issue).*|environment|net.*|profile|.*bashrc|services|timezone|sudoers|shells|.*(cron|daily|weekly|monthly|periodic).*)$' -exec tar -czf ${ETCPATH}/etc_configs.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/etc_hashes.txt 2> /dev/null
 find /usr/lib/cron/tabs /usr/local/etc/periodic /usr/lib/cron/jobs -follow -type f -size -2M -exec tar -czf ${ETCPATH}/cron.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/cron_hashes.txt 2> /dev/null
 
+# ==============================================================
+# Get browser data
+# ==============================================================
+# Safari
+printf "\n[*] Getting Safari browser data...\n"
+find -E /var/root /Users -type f -iregex '/Users/[^/]+/Library/(Cookies/Cookies\.binarycookies$|Safari/(downloads\.plist|LastSession\.plist|history\.db|cloudtabs\.db)$|Containers/com\.apple\.safari/Data/Library/Caches/com\.apple\.safari/(|cache\.db$|(tabsnapshots|webkitcache/version../).*)' -exec tar -czf ${LIBLOGS}/safari_data.tar.gz {} + 2> /dev/null
+# Chrome / Firefox
+printf "\n[*] Getting Firefox/Chrome browser data...\n"
+find -E /var/root /Users -type f -iregex '/Users/[^/]+/Library/Application Support/(Google|Firefox)/(Chrome/Default|Profiles).*' -exec tar -czf ${USERPATH}/chrome_firefox_data.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# Get Apple mailbox data
+# ==============================================================
+printf "\n[*] Getting Apple mailbox data...\n"
+find -E /Users /var/root -type f -iregex '/Users/[^/]+/Library/(Containers/com\.apple\.mail/.*|Mail( Downloads/.*|/V./(Maildata/Envelope Index/.*|[^/]+/.*\.mbox$)))' -exec tar -czf ${USERPATH}/apple_mailbox_data.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# Get USB Usage
+# ==============================================================
+printf "\n[*] Getting USB usage data...\n"
+find -E /Users /var/root -type f -iregex '/Users/[^/]+/Library/(Preferences/com\.apple\.finder\.plist|application support/com\.apple\.sharedfilelist/com\.apple\.LSSharedFileList\.FavoriteVolumes\.sfl2)$' -exec tar -czf ${USERPATH}/usb_usage.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# Account Usage
+# ==============================================================
+printf "\n[*] Getting account usage data...\n"
+find -E /Library/Preferences -type f -iregex '.*com\.apple\.loginwindow\.plist$' -exec tar -czf ${LIBLOGS}/account_usage.tar.gz {} + 2> /dev/null
+
+# ==============================================================
+# iCloud Documents
+# ==============================================================
+printf "\n[*] Getting iCloud documents...\n"
+find -E /Users -type f -iregex '/Users/[^/]+/Library/Mobile Documents/.*' -exec tar -czf ${USERPATH}/icloud_logs.tar.gz {} + 2> /dev/null
+
 # Get any files in "/home" and "/tmp" that are executable and under 10 megabytes in size
 printf "\n[*] Enumerating and hashing interesting executables...\n"
 find -E /Users -type f -perm +111 -size -10M -not -iregex '.*(Library|Trash).*' -exec tar -czf ${USERPATH}/User_Executables.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/users_executable_hashes.txt 2> /dev/null
@@ -112,7 +146,7 @@ find -E /Users -type f -size -10M -iregex '/Users/[^/]+/Library/ApplicationSuppo
 
 # Get authorized keys files from all users
 printf "\n[*] Getting and hashing SSH authorized key files...\n"
-find /etc /var/root /Users -follow -type f -name "authorized_keys" -exec tar -czf ${OUTPUTDIR}/authorized_ssh_keys.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/user_authorized_keys_hashes.txt 2> /dev/null
+find /etc /var/root /Users -follow -type f -name "(known|authorized)_hosts" -exec tar -czf ${OUTPUTDIR}/authorized_ssh_hosts.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/user_authorized_hosts_hashes.txt 2> /dev/null
 
 # Find SUID/GUID executables
 printf "\n[*] Enumerating and hashing SUID/GUID executables...\n"
