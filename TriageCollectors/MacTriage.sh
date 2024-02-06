@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Title:			Mac OS Triage Collector
-# Version:			1.1.2
+# Version:			1.1.3
 # Author:			Gary Contreras (The Offensive Defender - 0x0D)
 # Usage:			./MacTriage.sh
 # Description:		Use this to grab a forensic triage of a live Mac OS system
@@ -66,7 +66,7 @@ mount >> ${SYSTEMINFO}/mount.txt 2>> /dev/null
 
 # Get the configs from the "/etc" folder as well as passwd/group/shadow/cron files
 printf "\n[*] Getting and hashing \"/etc\" files...\n"
-find -E /etc -follow -type f -size -2M -iregex '.*(conf(ig)?|cfg|tab|\.local)$|/etc/(passwd|shadow|group|localtime|hosts|(host|issue).*|environment|net.*|profile|.*bashrc|services|timezone|sudoers|shells|.*(cron|daily|weekly|monthly|periodic).*)$' -exec tar -czf ${ETCPATH}/etc_configs.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/etc_hashes.txt 2> /dev/null
+find -E /etc -follow -type f -size -2M -iregex '.*(conf(ig)?|cfg|tab|\.local)$|/etc/(passwd|shadow|group|localtime|hosts|(host|issue).*|environment|net.*|profile|.*bashrc|services|timezone|sudoers|shells|.*(cron|daily|weekly|monthly|periodic).*)$' -exec tar -czf ${ETCPATH}/etc_configs.tar.gz {} + -exec shasum -a 256 {} + 2> /dev/null
 find /usr/lib/cron/tabs /usr/local/etc/periodic /usr/lib/cron/jobs -follow -type f -size -2M -exec tar -czf ${ETCPATH}/cron.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/cron_hashes.txt 2> /dev/null
 
 # ==============================================================
@@ -146,7 +146,7 @@ find -E /Users /var/root /tmp /opt /var/www -follow -not -iregex '.*Library.*' -
 
 # Get all of the relevant logs under "/var", "/Library", etc. and preserve the directory structure and critical attributes
 printf "\n[*] Getting and hashing relevant logs...\n"
-find /var/log /var/db/diagnostics /var/db/uuidtext /var/vm /var/run /var/audit -follow -type f -size -20M -exec tar -czf ${LOGPATH}/var_logs.tar.gz {} + -exec shasum -a 256 {} + >> ${HASHDIR}/var_hashes.txt 2> /dev/null
+find /var/log /var/db/dslocal/nodes/Default/users /var/db/diagnostics /var/db/uuidtext /var/vm /var/run /var/audit -follow -type f -size -20M -exec tar -czf ${LOGPATH}/var_logs.tar.gz {} + -exec shasum -a 256 {} + 2> /dev/null
 find /Libary/Logs -type f -size -20M -exec tar -czf ${LIBLOGS}/Library_System_Logs.tar.gz {} + 2> /dev/null
 find -E /Library -type f -size -20M -iregex '.*\.(plist|dat|db)$' -exec tar -czf ${LIBLOGS}/library_plist_dat_db_files.tar.gz {} + 2> /dev/null
 find /System/Library/LaunchAgents /Library/LaunchAgents -type f -exec tar -czf ${LIBLOGS}/persistence_system_launchagents.tar.gz {} + 2> /dev/null
